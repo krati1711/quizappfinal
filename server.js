@@ -7,11 +7,12 @@ const helmet = require('helmet');
 const app = express();
 require('dotenv').config();
 
-const authRoutes = require('../QuizApp/server/routes/adminRoutes');
-const quizRoutes = require('../QuizApp/server/routes/quizRoutes');
-const questionRoutes = require('../QuizApp/server/routes/questionRoutes');
-const userRoutes = require('../QuizApp/server/routes/userRoute');
-const responseRoutes = require('../QuizApp/server/routes/responseRoute');
+const authRoutes = require('./server/routes/adminRoutes');
+const quizRoutes = require('./server/routes/quizRoutes');
+const questionRoutes = require('./server/routes/questionRoutes');
+const userRoutes = require('./server/routes/userRoute');
+// const responseRoutes = require('../QuizApp/server/routes/responseRoute');
+const responseRoutes = require('./server/routes/responseRoute');
 
 //to disable header used to find if server is express prevent express related attacks()
 app.disable('x-powered-by');

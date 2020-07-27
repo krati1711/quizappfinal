@@ -59,7 +59,7 @@
                 <!-- <option value="">Select Quiz</option> -->
                 <option *ngFor="let quiz of quizList" [ngValue]="quiz._id">{{quiz.quizName}}</option>
               </select>
-              <span>Does not have quiz? <a (click)="gotoCreateQuiz()">Create</a></span>
+              <span>Does not have quiz? <a (click)="gotoCreateQuiz()" style="color: blue; cursor: pointer;">Create</a></span>
             </div>
           </div>
 

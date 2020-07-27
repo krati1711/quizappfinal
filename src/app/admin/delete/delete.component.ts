@@ -17,7 +17,6 @@ export class DeleteComponent implements OnInit {
   
   constructor(private adminService: AdminService, private router: Router) {
     adminService.getAllQuiz().subscribe(res => {
-      console.log(res);
       this.quizList = res.quizes;
       this.quizId = this.quizList[0]._id;
     },
@@ -41,7 +40,6 @@ export class DeleteComponent implements OnInit {
   }
 
   deleteQuiz(){
-    console.log(this.quizId);
     this.adminService.deleteQuiz(this.quizId).subscribe(
       res => {
         if (res.status == 'success'){

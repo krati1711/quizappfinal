@@ -81,7 +81,6 @@ export class StartComponent implements OnInit, OnDestroy {
           alert("Problem in register user");
         },
         () => {
-          console.log("in complete-" + localStorage.getItem('userdetails'));
           if (tempstatus === 0){
             alert("User Already Registered");
             this.registerForm.reset();
@@ -106,7 +105,6 @@ export class StartComponent implements OnInit, OnDestroy {
 
     this.commonService.loginUser(this.loginForm.value.name, this.loginForm.value.quizname)
       .subscribe(res => {
-        console.log('in result - ' +JSON.stringify(res));
         tempstatus = res.mystatuscode;
         if (tempstatus === 1){
           this.commonService.storeAccess(res.token);
@@ -122,7 +120,6 @@ export class StartComponent implements OnInit, OnDestroy {
           alert("Problem in login user");
         },
         () => {
-          console.log("in complete login-" + localStorage.getItem('userdetails'));
           if (tempstatus === 0){
             alert("No such user found. Try Registering first");
             this.loginForm.reset();

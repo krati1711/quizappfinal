@@ -21,8 +21,6 @@ export class AddQuizComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.createQuiz);
-    console.log(this.createQuiz.get('quiz_name').value);
     this.adminService.addQuiz(this.createQuiz.get('quiz_name').value).subscribe(result => {
       this.router.navigate(['/add-question']);
     },

@@ -16,23 +16,23 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DashboardComponent, canActivate: [RoleGuard], data: { role:'admin' }
   },
-  { 
+  {
     path: 'add-quiz', component: AddQuizComponent, canActivate: [RoleGuard], data: { role:'admin' }
   },
-  { 
+  {
     path: 'add-question', component: AddQuestionComponent, canActivate: [RoleGuard], data: { role:'admin' }
   },
-  { 
+  {
     path: 'delete', component: DeleteComponent, canActivate: [RoleGuard], data: { role:'admin' }
   },
   {
-    path: 'finish', component: FinishComponent, canActivate: [AuthGuard]
+    path: 'finish', component: FinishComponent, canActivate: [AuthGuard], data: { role:'user' }
   },
   {
     path: 'adminlogin', component: LoginComponent
   },
   {
-    path: 'quiz', component: QuizComponent, canActivate: [AuthGuard]
+    path: 'quiz', component: QuizComponent, canActivate: [AuthGuard], data: { role:'quiz' }
   },
   {
     path: '', component: StartComponent

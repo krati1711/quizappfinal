@@ -1,0 +1,49 @@
+.big-container{
+    margin-top: 150px;
+  }
+  
+  .my-container-css{
+    margin-top: 50px;
+  }
+  .mid-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .text-header{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid;
+    padding: 20px;
+    color: white;
+  }
+  
+  h1 {
+    background-color: #6601d9;
+  }
+  
+  button{
+    background-color: #6601d9;
+    color: white;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+  
+  button:hover{
+    color: white;
+  }
+  
+  .form-css{
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #6601d9;
+  }
+  
+  .inner-container{
+    padding: 20px;
+  }
+  

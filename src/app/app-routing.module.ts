@@ -32,7 +32,7 @@ const routes: Routes = [
     path: 'adminlogin', component: LoginComponent
   },
   {
-    path: 'quiz', component: QuizComponent, canActivate: [AuthGuard], data: { role:'quiz' }
+    path: 'quiz', component: QuizComponent, canActivate: [AuthGuard], data: { role:'user' }
   },
   {
     path: '', component: StartComponent

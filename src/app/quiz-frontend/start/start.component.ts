@@ -21,9 +21,11 @@ export class StartComponent implements OnInit, OnDestroy {
 
   signInpage = true;
   hasUsername = '';
-  
-  constructor(private formBuilder: FormBuilder, private questionService: QuestionService, private router: Router, private commonService: CommonService) { 
 
+  constructor(private formBuilder: FormBuilder, private questionService: QuestionService, private router: Router, private commonService: CommonService) {
+
+    // clearing all tokens when coming to home page
+    localStorage.clear();
     // adding background to page
     document.body.style.backgroundImage = "url('../../../assets/background1.jpg')";
 
@@ -127,7 +129,7 @@ export class StartComponent implements OnInit, OnDestroy {
           else if (localStorage.getItem('userdetails') && tempstatus != 2) {
             this.router.navigate(['/quiz']);
           }
-        });
+        })
   }
 
   // To toggle page between Login and Registration

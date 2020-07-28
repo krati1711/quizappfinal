@@ -17,7 +17,6 @@ export class AddQuestionComponent implements OnInit {
 
   constructor(private adminService: AdminService, private router: Router) {
     adminService.getAllQuiz().subscribe(res => {
-      console.log(res);
       this.quizList = res.quizes;
     },
       err => {
@@ -43,7 +42,6 @@ export class AddQuestionComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.addQuestion.get('new_question').value, this.addQuestion.get('correct_answer').value, this.addQuestion.get('wrong_answer').value, this.quizId);
     this.adminService.addQuestion(this.addQuestion.get('new_question').value, this.addQuestion.get('correct_answer').value, this.addQuestion.get('wrong_answer').value, this.quizId)
       .subscribe(res => {
         this.addQuestion.reset();

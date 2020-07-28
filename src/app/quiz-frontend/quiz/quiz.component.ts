@@ -124,8 +124,6 @@ export class QuizComponent implements OnInit {
   // When next button is clicked
   nextQuestion() {
 
-    // console.log('current question id-' +this.currentQuestion.id.trim(),'current question-' +this.currentQuestion.quest.trim(),'current my answer-' + this.tempAnswer.trim(),'current your answer-' + this.currentQuestion.answer.trim(), this.getTime());
-
     let finishQuiz = false;
     // if any option selected
     if (this.ifSelectedAny) {

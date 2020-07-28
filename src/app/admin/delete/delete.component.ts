@@ -33,10 +33,7 @@ export class DeleteComponent implements OnInit {
   }
 
   changeQuiz(e) {
-    // console.log('target -' + e.target.value);
-    // this.quizId = e.target.value.split(": ")[1];
     this.quizId = e.target.value;
-    // console.log('changes quizid-'+this.quizId);
   }
 
   deleteQuiz(){

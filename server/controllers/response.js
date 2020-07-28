@@ -14,54 +14,6 @@ exports.registerQuizResponse = (req, res, next) => {
     const tempdate = new Date();
     tempdate.setHours(tempdate.getHours() + 5);
     tempdate.setMinutes(tempdate.getMinutes() + 30);
-
-    /*User.findOne({ username: username })
-        .then(user => {
-            if (!user) {
-                const error = new Error('A user with this username could not be found.');
-                error.statusCode = 401;
-                throw error;
-            }
-            userObj = user.id;
-            // return User.findById(user.id);
-        })
-        .then(result1 => {
-            // userObj = result1;
-            console.log(result1);
-            // res.status(200).json({ message: 'Post fetched' });
-        })
-        .catch(err => {
-            console.log(" Error finding user - " + err);
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });*/
-
-    /*responses.forEach(response => {
-        const tempResponse = new Response({
-            questionid: response.questionid,
-            chosenAnswer: response.chosenAnswer,
-            answered: response.answered,
-            timetaken: response.timeTaken
-        });
-
-        tempResponse.save().then(result => {
-            console.log("response result1 - " + result);
-            responsObjs.push(result.id);
-        })
-        .catch(err => {
-            console.log(" Error pushing responses - " + err);
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });
-    }); */
-
-    //responsObj = responseFunction(responses);
-
-    // ------------- take 2 --------------------
     
     responses.forEach(response => {
         const tempResponse = new Response({
@@ -97,24 +49,6 @@ exports.registerQuizResponse = (req, res, next) => {
          next(err);
     });
 
-    /*console.log('this is response - ' + responsObjs);
-    const quizResponseObj = new QuizResponse({
-        quizid : quizid,
-        responses: responsObjs,
-        username: username
-    });*/
-
-    /*quizResponseObj.save().then(result => {
-        console.log(result);
-        res.status(201).json({ message: 'Quiz Response Created!', status: 'All Good' });
-    })
-    .catch(err => {
-        console.log("Error saving final response - "+ err);
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        // next(err);
-    }); */
 }
 
 exports.getStudentsperQuiz = (req, res, next) => {

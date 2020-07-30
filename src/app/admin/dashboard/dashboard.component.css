@@ -17,7 +17,7 @@ h1.page-header {
 }
 
 .custom-select {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
 }
 
 .logout-btn-class {
@@ -59,10 +59,12 @@ h1.page-header {
   border-bottom: 1px solid #e7e7e7;
 }
 
-.side-menu .navbar-nav .active a {
-  background-color: transparent;
-  margin-right: -1px;
-  border-right: 5px solid #e7e7e7;
+.active {
+  color: #6601d9;
+}
+
+.nav-link {
+  padding: 1rem 2rem;
 }
 
 .side-menu .navbar-nav li {
@@ -263,6 +265,10 @@ button:hover {
 }
 
 .navbar-a-css {
+  color: white;
+}
+
+.navbar-a-css:hover {
   color: white;
 }
 

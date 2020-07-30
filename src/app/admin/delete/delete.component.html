@@ -1,16 +1,11 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-<nav class="navbar navbar-css navbar-static-top">
+<nav class="row" style="background-color:#6608d9">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <a class="navbar-brand" routerLink='/dashboard' class="navbar-a-css" style="font-size: 30px;">Admin
+    <div class="navbar-header col-4 offset-4 text-center">
+        <a class="navbar-brand" (click)="gotoDashboard()" class="navbar-a-css" style="font-size: 30px;">Admin
         </a>
     </div>
-    <div class="logout-btn-class">
-        <a id="logout" class="navbar-a-css" href="#">
+    <div class="col-4 d-flex justify-content-end align-items-center">
+        <a id="logout" class="navbar-a-css" href="#" style="padding: 1rem;">
             Logout</a>
     </div>
     <!-- /.container-fluid -->
@@ -18,54 +13,45 @@
 
 <div class="container-fluid main-container" style="margin: 20px 0px;">
     <div class="row">
-        <div class="col-md-2 sidebar">
-            <div class="row">
-                <div class="absolute-wrapper"> </div>
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar font-weight-bold">
+            <div class="sidebar-sticky">
                 <!-- Menu -->
-                <div class="side-menu">
-                    <nav class="navbar navbar-default" role="navigation">
-                        <!-- Main Menu -->
-                        <div class="side-menu-container">
-                            <ul class="nav navbar-nav">
-                                <li><a class="no-border-right-plz" (click)="gotoDashboard()"> Dashboard
-                                    </a>
-                                </li>
-                                <li><a routerLink="/add-question" (click)="gotoAddQuestionClick()"> Add </a></li>
-                                <li class="active"><a routerLink="/delete" (click)="gotoDeleteClick()"> Delete </a></li>
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </nav>
-                </div>
+                <ul class="nav flex-column">
+                    <!--   style="background-color: #6601d9; color: white"  -->
+                    <li class="nav-item"><a class="nav-link" (click)="gotoDashboard()"> Dashboard </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/add-question"
+                            (click)="gotoAddQuestionClick()"> Add </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" routerLink="/delete" (click)="gotoDeleteClick()">
+                            Delete
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="col-md-10 container">
+        </nav>
+        <div class="col-md-9 col-lg-10 px-4">
             <form>
-
-                <!-- <h3 style="text-align:center">
-      Add Questions
-    </h3> -->
-                <div class="content">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <strong>DELETE QUIZ</strong>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <strong>DELETE QUIZ</strong>
                     </div>
-
-                    <div class="form-group">
-                        <label for="quizname">Select Quiz <span class="lblError"></span></label>
-                        <div class="controls">
-                            <select class="custom-select" (change)="changeQuiz($event)" id="quizname">
-                                <!--<option value="">Choose your quiz</option>-->
-                                <option *ngFor="let quiz of quizList" [value]="quiz._id">{{quiz.quizName}}</option>
-                            </select>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="quizname" style="font-size: 1.25rem;">Select Quiz <span
+                                    class="lblError"></span></label>
+                            <div class="controls">
+                                <select class="custom-select" (change)="changeQuiz($event)" id="quizname">
+                                    <!--<option value="">Choose your quiz</option>-->
+                                    <option *ngFor="let quiz of quizList" [value]="quiz._id">{{quiz.quizName}}</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="button" (click)="deleteQuiz()">Delete Quiz</button>
+                        <div class="form-group text-center">
+                            <button class="btn " type="button" (click)="deleteQuiz()">Delete Quiz</button>
+                        </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

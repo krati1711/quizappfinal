@@ -1,16 +1,11 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-<nav class="navbar navbar-css navbar-static-top">
+<nav class="row" style="background-color:#6608d9">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <a class="navbar-brand" routerLink='/dashboard' class="navbar-a-css" style="font-size: 30px;">Admin
+    <div class="navbar-header col-4 offset-4 text-center">
+        <a class="navbar-brand" (click)="gotoDashboard()" class="navbar-a-css" style="font-size: 30px;">Admin
         </a>
     </div>
-    <div class="logout-btn-class">
-        <a id="logout" class="navbar-a-css" href="#">
+    <div class="col-4 d-flex justify-content-end align-items-center">
+        <a id="logout" class="navbar-a-css" href="#" style="padding: 1rem;">
             Logout</a>
     </div>
     <!-- /.container-fluid -->
@@ -18,111 +13,108 @@
 
 <div class="container-fluid main-container" style="margin: 20px 0px;">
     <div class="row">
-        <div class="col-md-2 sidebar">
-            <div class="row">
-                <div class="absolute-wrapper"> </div>
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar font-weight-bold">
+            <div class="sidebar-sticky">
                 <!-- Menu -->
-                <div class="side-menu">
-                    <nav class="navbar navbar-default" role="navigation">
-                        <!-- Main Menu -->
-                        <div class="side-menu-container">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a class="no-border-right-plz" (click)="gotoDashboard()"> Dashboard
-                                    </a>
-                                </li>
-                                <li><a routerLink="/add-question" (click)="gotoAddQuestionClick()"> Add </a></li>
-                                <li><a routerLink="/delete" (click)="gotoDeleteClick()"> Delete </a></li>
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </nav>
-                </div>
+                <ul class="nav flex-column">
+                    <!--   style="background-color: #6601d9; color: white"  -->
+                    <li class="nav-item"><a class="nav-link active" (click)="gotoDashboard()"> Dashboard </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/add-question"
+                            (click)="gotoAddQuestionClick()"> Add Quiz/Questions </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()"> Delete Quiz
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </nav>
 
-        <div class="col-md-10 content">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+        <div class="col-md-10 col-lg-10 px-4">
+            <div class="card">
+                <div class="card-header">
                     <strong>DASHBOARD</strong>
                 </div>
-            </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="quizname-select" style="font-size: 1.25rem;">Select Quiz <span
+                                class="lblError"></span></label>
+                        <div class="controls">
+                            <!-- <select class="custom-select" (change)="changeQuiz($event)" formControlName="quiz_name"> -->
+                            <select class="custom-select" (change)="changeQuiz($event)" id="quizname-select">
+                                <!--<option value="">Choose your quiz</option>-->
+                                <option *ngFor="let quiz of quizList" [value]="quiz._id">{{quiz.quizName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <button (click)="getStudents()" class="btn">Show Results</button>
+                    </div>
 
-            <div class="form-group">
-                <label for="quizname-select">Select Quiz <span class="lblError"></span></label>
-                <div class="controls">
-                    <!-- <select class="custom-select" (change)="changeQuiz($event)" formControlName="quiz_name"> -->
-                    <select class="custom-select" (change)="changeQuiz($event)" id="quizname-select">
-                        <!--<option value="">Choose your quiz</option>-->
-                        <option *ngFor="let quiz of quizList" [value]="quiz._id">{{quiz.quizName}}</option>
-                    </select>
+                    <table class="table table-custom-class" *ngIf="doWeHaveStudents === true">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Sr. No.</th>
+                                <th scope="col ">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of studentList; let i = index">
+                                <th scope="row">{{i+1}}</th>
+                                <td style="cursor: pointer;"><a (click)="getResponses(item.userid)">{{item.name}}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="doWeHaveResponse === true">
+
+                        <table class="table ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{userDetail.name}}</td>
+                                    <td>{{userDetail.username}}</td>
+                                    <td>{{userDetail.email}}</td>
+                                    <td>{{userDetail.age}}</td>
+                                    <td>{{userDetail.gender}}</td>
+                                    <td>{{userScore}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Sr. No.</th>
+                                    <th scope="col">Question</th>
+                                    <th scope="col">Response Time</th>
+                                    <th scope="col">Correct/Incorrect</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of responses; let i = index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{item.question}}</td>
+                                    <td>{{item.timetaken}}</td>
+                                    <td>{{(item.chosenAnswer.trim() == item.correctAnswer.trim()) ? 'Correct' : 'Incorrect'}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <button (click)="getStudents()" class="btn btn-primary">Show Results</button>
-            </div>
-
-            <table class="table table-custom-class" *ngIf="doWeHaveStudents === true">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Sr. No.</th>
-                        <th scope="col ">Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of studentList; let i = index">
-                        <th scope="row">{{i+1}}</th>
-                        <td style="cursor: pointer;"><a (click)="getResponses(item.userid)">{{item.name}}</a></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div *ngIf="doWeHaveResponse === true">
-
-                <table class="table ">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email Id</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{userDetail.name}}</td>
-                            <td>{{userDetail.username}}</td>
-                            <td>{{userDetail.email}}</td>
-                            <td>{{userDetail.age}}</td>
-                            <td>{{userDetail.gender}}</td>
-                            <td>{{userScore}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Sr. No.</th>
-                            <th scope="col">Question</th>
-                            <th scope="col">Response Time</th>
-                            <th scope="col">Correct/Incorrect</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of responses; let i = index">
-                            <th scope="row">{{i+1}}</th>
-                            <td>{{item.question}}</td>
-                            <td>{{item.timetaken}}</td>
-                            <td>{{(item.chosenAnswer.trim() == item.correctAnswer.trim()) ? 'Correct' : 'Incorrect'}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
         </div>
     </div>
 </div>

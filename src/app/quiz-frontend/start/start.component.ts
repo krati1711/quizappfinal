@@ -85,6 +85,7 @@ export class StartComponent implements OnInit, OnDestroy {
         () => {
           if (tempstatus === 0){
             alert("User Already Registered");
+            this.hasUsername = '';
             this.registerForm.reset();
           }
           else if (localStorage.getItem('userdetails')) {

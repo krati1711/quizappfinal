@@ -21,9 +21,9 @@
               <li class="nav-item"><a class="nav-link" (click)="gotoDashboard()" > Dashboard </a>
               </li>
               <li class="nav-item"><a class="nav-link active" routerLink="/add-question"
-                      (click)="gotoAddQuestionClick()"> Add </a>
+                      (click)="gotoAddQuestionClick()"> Add Quiz/Questions </a>
               </li>
-              <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()"> Delete
+              <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()"> Delete Quiz
                   </a>
               </li>
           </ul>
@@ -44,38 +44,52 @@
           <div class="form-group">
             <label for="quizname" style="font-size: 1.25rem;">Quiz Name <span class="lblError"></span></label>
             <div class="controls">
-              <select class="custom-select" (change)="changeQuiz($event)" formControlName="quiz_name" id="quizname">
-                <!-- <option value="">Select Quiz</option> -->
+              <select class="custom-select" (change)="changeQuiz($event)" formControlName="quiz_name"
+                id="quizname"  [ngClass]="{ 'is-invalid': addSubmitted && f.quiz_name.errors }">
                 <option *ngFor="let quiz of quizList" [ngValue]="quiz._id">{{quiz.quizName}}</option>
               </select>
+              <div *ngIf="addSubmitted && f.quiz_name.errors" class="invalid-feedback">
+                <div *ngIf="f.quiz_name.errors.required">Select some quiz</div>
+              </div>
               <span>Does not have quiz? <a (click)="gotoCreateQuiz()" style="color: blue; cursor: pointer;">Create</a></span>
             </div>
           </div>
 
-          <div class="form-group">
             <!-- Add Question -->
+          <div class="form-group">
             <label for="addquestion">Add Question <span class="lblError"></span></label>
             <div class="controls">
               <input type="text" id="addquestion" placeholder="Enter question" class="form-control"
-                formControlName="new_question">
+                formControlName="new_question" [ngClass]="{ 'is-invalid': addSubmitted && f.new_question.errors }">
+                <div *ngIf="addSubmitted && f.new_question.errors" class="invalid-feedback">
+                  <div *ngIf="f.new_question.errors.required">Question field cannot be empty</div>
+                </div>
             </div>
-
+          </div>
             <!-- Add correct answer -->
+          <div class="form-group">
             <label for="correctanswer">Correct Answer <span class="lblError"></span></label>
             <div class="controls">
               <input type="text" id="correctanswer" placeholder="Enter Correct Answer" class="form-control"
-                formControlName="correct_answer">
+                formControlName="correct_answer" [ngClass]="{ 'is-invalid': addSubmitted && f.correct_answer.errors }">
+                <div *ngIf="addSubmitted && f.correct_answer.errors" class="invalid-feedback">
+                  <div *ngIf="f.correct_answer.errors.required">Correct Answer field cannot be empty</div>
+                </div>
             </div>
-
+          </div>
             <!-- Add wrong answer -->
+          <div class="form-group">
             <label for="wronganswer">Wrong Answer <span class="lblError"></span></label>
             <div class="controls">
               <input type="text" id="wronganswer" placeholder="Enter Wrong Answer" class="form-control"
-                formControlName="wrong_answer">
+                formControlName="wrong_answer" [ngClass]="{ 'is-invalid': addSubmitted && f.wrong_answer.errors }">
+                <div *ngIf="addSubmitted && f.wrong_answer.errors" class="invalid-feedback">
+                  <div *ngIf="f.wrong_answer.errors.required">Wrong Answer field cannot be empty</div>
+                </div>
             </div>
           </div>
           <div class="form-group text-center">
-            <button class="btn" type="submit" style="width: 30%">Add another question
+            <button class="btn" type="submit" style="width: 30%" [disabled]="addQuestion.invalid">Add another question
             </button>
           </div>
         </div>

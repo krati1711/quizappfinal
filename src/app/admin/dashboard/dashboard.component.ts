@@ -25,6 +25,8 @@ export class DashboardComponent implements OnInit {
 
     // adding scroll to page
     document.body.style.overflow = "scroll";
+    // remove background image
+    document.body.style.backgroundImage = 'none';
    }
 
   ngOnInit(): void {

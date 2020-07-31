@@ -18,12 +18,12 @@
                 <!-- Menu -->
                 <ul class="nav flex-column">
                     <!--   style="background-color: #6601d9; color: white"  -->
-                    <li class="nav-item"><a class="nav-link" (click)="gotoDashboard()" > Dashboard </a>
+                    <li class="nav-item"><a class="nav-link" (click)="gotoDashboard()"> Dashboard </a>
                     </li>
                     <li class="nav-item"><a class="nav-link active" routerLink="/add-question"
-                            (click)="gotoAddQuestionClick()"> Add </a>
+                            (click)="gotoAddQuestionClick()"> Add Quiz/Questions </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()"> Delete
+                    <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()"> Delete Quiz
                         </a>
                     </li>
                 </ul>
@@ -32,30 +32,30 @@
         <div class="col-md-9 col-lg-10 px-4">
             <form [formGroup]='createQuiz' (ngSubmit)="onSubmit()">
 
-                <!-- <h3 style="text-align:center">
-            Create Quiz
-        </h3> -->
-
                 <div class="card">
-                        <div class="card-header">
-                            <strong>CREATE QUIZ</strong>
-                        </div>
-                        <div class="card-body">
-                    <div class="form-group">
-                        <!-- Quizname -->
-                        <label for="newquizname" style="font-size: 1.25rem;">Quiz Name <span class="lblError"></span></label>
-                        <div class="controls">
-                            <input type="text" placeholder="Enter quiz name" class="form-control"
-                                formControlName="quiz_name" id="newquizname">
-                        </div>
+                    <div class="card-header">
+                        <strong>CREATE QUIZ</strong>
                     </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <!-- Quizname -->
+                            <label for="newquizname" style="font-size: 1.25rem;">Quiz Name <span
+                                    class="lblError"></span></label>
+                            <div class="controls">
+                                <input type="text" placeholder="Enter quiz name" class="form-control" id="newquizname"
+                                    formControlName="quiz_name"  [ngClass]="{ 'is-invalid': createQuizSubmitted && f.quiz_name.errors }">
+                                <div *ngIf="createQuizSubmitted && f.quiz_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.quiz_name.errors.required">Quiz name field cannot be empty</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="form-group text-center">
-                        <button class="btn" type="submit" style="width: 15%">
-                            Create
-                        </button>
+                        <div class="form-group text-center">
+                            <button class="btn" type="submit" style="width: 15%">
+                                Create
+                            </button>
+                        </div>
                     </div>
-                </div>
                 </div>
             </form>
         </div>

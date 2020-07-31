@@ -4,6 +4,7 @@ import { Quiz } from '../models/Quiz';
 import { Router } from '@angular/router';
 import { QuestionService } from '../services/question.service';
 import { CommonService } from 'src/app/services/common.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-start',
@@ -11,6 +12,11 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit, OnDestroy {
+
+  // subscriptions
+  private getAllQuiz$ : Subscription = new Subscription();
+  private register$: Subscription = new Subscription();
+  private login$: Subscription = new Subscription();
 
   registerForm!: FormGroup;
   loginForm!: FormGroup;
@@ -30,7 +36,7 @@ export class StartComponent implements OnInit, OnDestroy {
     document.body.style.backgroundImage = "url('../../../assets/background1.jpg')";
 
     // Getting quiz of list to select from
-    questionService.getAllQuiz().subscribe(res => {
+    this.getAllQuiz$ = questionService.getAllQuiz().subscribe(res => {
       this.quizList = res.quizes;
     },
       err => {
@@ -38,7 +44,9 @@ export class StartComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
-    console.log('on destry start');
+    this.getAllQuiz$.unsubscribe();
+    this.register$.unsubscribe();
+    this.login$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -69,7 +77,7 @@ export class StartComponent implements OnInit, OnDestroy {
     }
 
     let tempuser: string;
-    this.commonService.registerUser(this.registerForm.value.email, this.registerForm.value.name, this.registerForm.value.age, this.registerForm.value.gender)
+    this.register$ = this.commonService.registerUser(this.registerForm.value.email, this.registerForm.value.name, this.registerForm.value.age, this.registerForm.value.gender)
       .subscribe(res => {
         tempuser = res.name;
         tempstatus = res.mystatuscode;
@@ -106,7 +114,7 @@ export class StartComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.commonService.loginUser(this.loginForm.value.name, this.loginForm.value.quizname)
+    this.login$ = this.commonService.loginUser(this.loginForm.value.name, this.loginForm.value.quizname)
       .subscribe(res => {
         tempstatus = res.mystatuscode;
         if (tempstatus === 1){

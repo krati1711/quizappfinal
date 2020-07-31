@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   
+  // subscription
+  private loginSub$: Subscription = new Subscription();
+
   loginForm: FormGroup;
   submitted = false;
   returnUrl: string;
   loginError: string;
 
   constructor(private fb: FormBuilder, private router: Router, private commonService: CommonService) { }
+
+  ngOnDestroy(): void {
+    this.loginSub$.unsubscribe();
+  }
 
   ngOnInit(): void {
 
@@ -43,7 +51,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.commonService.login(this.username.value, this.password.value).subscribe((data) => {
+    this.loginSub$ = this.commonService.login(this.username.value, this.password.value).subscribe((data) => {
        if (this.commonService.isLoggedIn) {
           this.router.navigate(['/dashboard']);
         } else {

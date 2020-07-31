@@ -50,9 +50,9 @@ const RSA_PUBLIC_KEY = fs.readFileSync(path.join(__dirname, '../', 'keys') + '/p
 
 /**
  * Checks for headers before passing to other functions
- * @param {header - authorization} req 
- * @param {json with some message if problems occurs} res 
- * @param {} url 
+ * @param {header - authorization} req
+ * @param {json with some message if problems occurs} res
+ * @param {} url
  */
 module.exports = async (req, res, next) => {
 
@@ -73,11 +73,10 @@ module.exports = async (req, res, next) => {
       res.status(401).json({ message: 'No Token Found' });
       throw new Error('No Token Found');
     }
-    
+
     // ----------------decoding token------------------------------------------------
     const decodedToken = jwt.verify(token, RSA_PUBLIC_KEY);
 
-    console.log('decoded token-' + decodedToken);
     //-----------------------if problem in decoded token ---------------------------
     if (!decodedToken) {
       res.status(401).json({ message: 'No good token found' });
@@ -107,7 +106,7 @@ module.exports = async (req, res, next) => {
       throw new Error('Not Authenticated');
     }
   } catch (err) {
-    
+
     if (err.name == 'JsonWebTokenError'){
       res.status(401).json({ message: 'Invalid Token' });
       return;

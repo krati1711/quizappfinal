@@ -48,9 +48,9 @@ const RSA_PRIVATE_KEY = fs.readFileSync(path.join(__dirname, '../', 'keys') + '/
 
 /**
  * Registers new users
- * @param {body - email, name, age, gender} req 
- * @param {json with token and username} res 
- * @param {'/user/registerUser'} url 
+ * @param {body - email, name, age, gender} req
+ * @param {json with token and username} res
+ * @param {'/user/registerUser'} url
  */
 exports.registerUser = async (req, res, next) => {
     const email = req.body.email;
@@ -134,14 +134,13 @@ exports.registerUser = async (req, res, next) => {
 
 /**
  * Login for users
- * @param {body - name, quizid} req 
- * @param {json with token and questions} res 
- * @param {'/user/loginUser'} url 
+ * @param {body - name, quizid} req
+ * @param {json with token and questions} res
+ * @param {'/user/loginUser'} url
  */
 exports.loginUser = async (req, res, next) => {
     const name = req.body.name;
     const quizid = req.body.quizid;
-    let tempuser;
 
     try {
         // ------------------check if quizid valid --------------------------
@@ -172,8 +171,8 @@ exports.loginUser = async (req, res, next) => {
         }
 
         // since user has not given quiz, create token and send questions
-        const token = jwt.sign({ uname: tempuser.username, role: 'user' }, RSA_PRIVATE_KEY, { algorithm: 'RS256', expiresIn: '20m' });
-        res.status(200).json({ message: 'User Found!', username: tempuser.id, name: tempuser.name, token: token, mystatuscode: 1 });
+        const token = jwt.sign({ uname: user.username, role: 'user' }, RSA_PRIVATE_KEY, { algorithm: 'RS256', expiresIn: '20m' });
+        res.status(200).json({ message: 'User Found!', username: user.id, name: user.name, token: token, mystatuscode: 1 });
 
     } catch (err) {
         if (!err.statusCode) {
@@ -190,9 +189,9 @@ function generateAccessToken(username) {
 
 /**
  * Get responses which user has given for that quiz
- * @param {params - userid, quizid} req 
- * @param {json with user details and responses} res 
- * @param {'/user/userResponse/:userid&:quizid'} url 
+ * @param {params - userid, quizid} req
+ * @param {json with user details and responses} res
+ * @param {'/user/userResponse/:userid&:quizid'} url
  */
 exports.userResponse = async (req, res, next) => {
     const userid = req.params.userid;
@@ -200,7 +199,7 @@ exports.userResponse = async (req, res, next) => {
 
     try {
 
-        // checking if objectid is valid---------- 
+        // checking if objectid is valid----------
         if (!mongoose.isValidObjectId(quizid)) {
             res.status(400).json({ message: 'Invalid ObjectId', status: 'fail' });
             throw new Error('Invalid ObjectId');
@@ -221,16 +220,16 @@ exports.userResponse = async (req, res, next) => {
         }
 
         // ------------getting the quizresponse object of that user for quiz
-        const QuizResponse = await QuizResponse.find({ username: user._id, quizid: quizid });
+        const QuizRes = await QuizResponse.find({ username: user._id, quizid: quizid });
 
         // if user has not given that quiz
-        if (!QuizResponse) {
+        if (!QuizRes) {
             res.status(404).json({ message: 'User has not given this quiz', status: 'fail' });
             throw new Error('User has not given this quiz');
         }
 
         // -----------now getting responses (answers) of that user & quiz
-        const responses = await Response.find().where('_id').in(QuizResponse[0].responses).exec();
+        const responses = await Response.find().where('_id').in(QuizRes[0].responses).exec();
 
         // ---------------all ok; send user details in responses ------------
         res.status(200).json({ status: 'Mic check all ok', user: user, responses: responses, mystatuscode: 1 });

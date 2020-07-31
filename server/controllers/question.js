@@ -43,9 +43,9 @@ const Quiz = require('../models/quiz');
 
 /**
  * Returns message if new quiz is created
- * @param {body - question, correct answer, wrong answer, quizid} req 
- * @param {json with some message} res 
- * @param {'/question/addQuestion'} url 
+ * @param {body - question, correct answer, wrong answer, quizid} req
+ * @param {json with some message} res
+ * @param {'/question/addQuestion'} url
  */
 exports.addQuestion = async (req, res, next) => {
     const actualquestion = req.body.question;
@@ -95,9 +95,9 @@ exports.addQuestion = async (req, res, next) => {
 
 /**
  * Returns questions of a particular quiz
- * @param {params - quizid} req 
- * @param {json with questions} res 
- * @param {'/question/getQuestionsPerQuiz/:quizid'} url 
+ * @param {params - quizid} req
+ * @param {json with questions} res
+ * @param {'/question/getQuestionsPerQuiz/:quizid'} url
  */
 exports.getQuestionsPerQuiz = async (req, res, next) => {
     const quizid = req.params.quizid;
@@ -124,7 +124,8 @@ exports.getQuestionsPerQuiz = async (req, res, next) => {
         }
 
         //all ok
-        res.status(200).json({ message: 'Got All Quiz for that question', quizes: quizes });
+        res.status(200).json({ message: 'Got All Quiz for that question', quizes: questions });
+
 
     } catch (err) {
         if (!err.statusCode) {

@@ -7,6 +7,7 @@ const path = require('path');
 const User = require('../models/user');
 const QuizResponse = require('../models/quizresponse');
 const Response = require('../models/response');
+const Quiz = require('../models/quiz');
 
 const RSA_PRIVATE_KEY = fs.readFileSync(path.join(__dirname, '../', 'keys') + '/private.key', 'utf8');
 

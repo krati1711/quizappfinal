@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AdminService } from '../services/admin.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+
+  //subscriptions
+  private getQuiz$: Subscription = new Subscription();
+  private getStudents$: Subscription = new Subscription();
+  private getResponses$: Subscription = new Subscription();
   
   addQuestion: FormGroup;
   quizList: any[] = [];
@@ -27,10 +33,16 @@ export class DashboardComponent implements OnInit {
     document.body.style.overflow = "scroll";
     // remove background image
     document.body.style.backgroundImage = 'none';
-   }
+  }
+
+  ngOnDestroy(): void {
+    this.getQuiz$.unsubscribe();
+    this.getStudents$.unsubscribe();
+    this.getResponses$.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.adminService.getAllQuiz().subscribe(result => {
+    this.getQuiz$ = this.adminService.getAllQuiz().subscribe(result => {
       this.quizList = result.quizes;
       this.quizId = this.quizList[0]._id;
     },
@@ -50,7 +62,7 @@ export class DashboardComponent implements OnInit {
 
   getStudents() {
     this.doWeHaveResponse = false;
-    this.adminService.getStudents(this.quizId).subscribe( res => {
+    this.getStudents$ = this.adminService.getStudents(this.quizId).subscribe( res => {
       this.studentList = res.student;
     }
     ,err => {
@@ -66,7 +78,7 @@ export class DashboardComponent implements OnInit {
 
   getResponses(userid: string) {
     this.userScore = 0;
-    this.adminService.getResponsesperQuiz(this.quizId, userid)
+    this.getResponses$ = this.adminService.getResponsesperQuiz(this.quizId, userid)
       .subscribe(res=> {
         this.userDetail = res.user;
         this.responses = res.responses;

@@ -1,29 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Quiz } from 'src/app/quiz-frontend/models/Quiz';
 import { FormGroup } from '@angular/forms';
 import { AdminService } from '../services/admin.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.css']
 })
-export class DeleteComponent implements OnInit {
+export class DeleteComponent implements OnInit, OnDestroy {
+
+  // Subscription
+  private getQuiz$: Subscription = new Subscription();
+  private delQuiz$: Subscription = new Subscription();
 
   addQuestion: FormGroup;
   quizList: Quiz[] = [];
   quizId: string = "";
   
   constructor(private adminService: AdminService, private router: Router) {
-    adminService.getAllQuiz().subscribe(res => {
+    this.getQuiz$ = adminService.getAllQuiz().subscribe(res => {
       this.quizList = res.quizes;
       this.quizId = this.quizList[0]._id;
     },
     err => {
       console.log(err);
     });
-   }
+  }
+
+  ngOnDestroy(): void {
+    this.getQuiz$.unsubscribe();
+    this.delQuiz$.unsubscribe();
+  }
 
   ngOnInit(): void {
   }
@@ -37,7 +47,7 @@ export class DeleteComponent implements OnInit {
   }
 
   deleteQuiz(){
-    this.adminService.deleteQuiz(this.quizId).subscribe(
+    this.delQuiz$ = this.adminService.deleteQuiz(this.quizId).subscribe(
       res => {
         if (res.status == 'success'){
           alert('Quiz deleted');

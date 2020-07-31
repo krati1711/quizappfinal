@@ -1,19 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-quiz',
   templateUrl: './add-quiz.component.html',
   styleUrls: ['./add-quiz.component.css']
 })
-export class AddQuizComponent implements OnInit {
+export class AddQuizComponent implements OnInit, OnDestroy {
+
+  // subscription
+  private addQuiz$: Subscription = new Subscription();
 
   createQuiz: FormGroup;
   createQuizSubmitted = false;
 
   constructor(private adminService: AdminService, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.addQuiz$.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.createQuiz = new FormGroup({
@@ -31,7 +39,7 @@ export class AddQuizComponent implements OnInit {
       return;
     }
 
-    this.adminService.addQuiz(this.createQuiz.get('quiz_name').value).subscribe(result => {
+    this.addQuiz$ = this.adminService.addQuiz(this.createQuiz.get('quiz_name').value).subscribe(result => {
       alert('Quiz created');
       this.router.navigate(['/add-question']);
     },

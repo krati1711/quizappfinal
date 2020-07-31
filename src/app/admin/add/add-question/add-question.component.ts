@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Quiz } from 'src/app/quiz-frontend/models/Quiz';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-question',
   templateUrl: './add-question.component.html',
   styleUrls: ['./add-question.component.css']
 })
-export class AddQuestionComponent implements OnInit {
+export class AddQuestionComponent implements OnInit, OnDestroy {
+
+  //subscription
+  private getQuiz$: Subscription = new Subscription();
+  private addQuestion$: Subscription = new Subscription();
 
   addQuestion: FormGroup;
   quizList: Quiz[] = [];
@@ -17,12 +22,17 @@ export class AddQuestionComponent implements OnInit {
   addSubmitted = false;
 
   constructor(private adminService: AdminService, private router: Router, private formBuilder: FormBuilder) {
-    adminService.getAllQuiz().subscribe(res => {
+    this.getQuiz$ = adminService.getAllQuiz().subscribe(res => {
       this.quizList = res.quizes;
     },
       err => {
         console.log(err);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.getQuiz$.unsubscribe();
+    this.addQuestion$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -50,7 +60,7 @@ export class AddQuestionComponent implements OnInit {
     if (this.addQuestion.invalid) {
       return;
     }
-    this.adminService.addQuestion(this.addQuestion.get('new_question').value, this.addQuestion.get('correct_answer').value, this.addQuestion.get('wrong_answer').value, this.quizId)
+    this.addQuestion$ = this.adminService.addQuestion(this.addQuestion.get('new_question').value, this.addQuestion.get('correct_answer').value, this.addQuestion.get('wrong_answer').value, this.quizId)
       .subscribe(res => {
         this.addQuestion.reset();
         alert('Question added');

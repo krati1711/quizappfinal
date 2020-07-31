@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { QuestionService } from '../services/question.service';
 import { EachResponse } from '../models/EachResponse';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quiz',
@@ -12,6 +13,10 @@ import { EachResponse } from '../models/EachResponse';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
+
+  // subscriptions 
+  private getQuestions$: Subscription = new Subscription();
+  private registerRes$: Subscription = new Subscription();
 
   title = 'QuestionaireApp';
   questions: Question[] = [];
@@ -75,12 +80,13 @@ export class QuizComponent implements OnInit {
   // No idea why??
   @HostListener('unloaded')
   ngOnDestroy(): void {
-    console.log('Quiz component Destroy');
+    this.getQuestions$.unsubscribe();
+    this.registerRes$.unsubscribe();
   }
 
   // Getting All the questions of that particular quiz from backend
   loadQuestions(quizid: string) {
-    this.questionService.getQuestionPerQuiz(quizid).subscribe(result => {
+    this.getQuestions$ = this.questionService.getQuestionPerQuiz(quizid).subscribe(result => {
       result.quizes.forEach((element: any) => {
         element.options = this.shuffleOptions(element.options);
         this.questions.push(new Question(element._id, element.question, element.options, element.answer));
@@ -139,7 +145,7 @@ export class QuizComponent implements OnInit {
     if (this.pager.index === this.pager.count) {
       // this is when all questions end
       clearInterval(this.timer);
-      this.userService.registerResponse(this.response)
+      this.registerRes$ = this.userService.registerResponse(this.response)
         .subscribe(res => {
           this.router.navigate(['/finish']);
           finishQuiz = true;

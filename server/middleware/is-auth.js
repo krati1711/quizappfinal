@@ -57,10 +57,12 @@ const RSA_PUBLIC_KEY = fs.readFileSync(path.join(__dirname, '../', 'keys') + '/p
 module.exports = async (req, res, next) => {
 
   const authHeader = req.headers.authorization;
+  let errorSent = false;
 
   try {
     // ------------------check if any header present------------------
     if (!authHeader) {
+      errorSent = true;
       res.status(401).json({ message: 'No Header Found' });
       throw new Error('No Header Found');
     }
@@ -70,6 +72,7 @@ module.exports = async (req, res, next) => {
 
     //------------------if no token found ----------------------
     if (!token) {
+      errorSent = true;
       res.status(401).json({ message: 'No Token Found' });
       throw new Error('No Token Found');
     }
@@ -79,6 +82,7 @@ module.exports = async (req, res, next) => {
 
     //-----------------------if problem in decoded token ---------------------------
     if (!decodedToken) {
+      errorSent = true;
       res.status(401).json({ message: 'No good token found' });
       throw new Error('No good token found');
     }
@@ -102,11 +106,11 @@ module.exports = async (req, res, next) => {
     }
     //---------------user found in neither------------------------------
     else {
+      errorSent = true;
       res.status(500).json({ message: 'Not Authenticated' });
       throw new Error('Not Authenticated');
     }
   } catch (err) {
-
     if (err.name == 'JsonWebTokenError'){
       res.status(401).json({ message: 'Invalid Token' });
       return;
@@ -114,7 +118,10 @@ module.exports = async (req, res, next) => {
     else if (!err.statusCode) {
       err.statusCode = 500;
     }
-    res.status(500).json({ message: 'Not Authenticated' });
+    if (errorSent == false){
+      res.status(500).json({ message: 'Not Authenticated' });
+    }
+    return;
   }
 };
 

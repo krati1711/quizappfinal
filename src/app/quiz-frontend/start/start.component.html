@@ -2,7 +2,7 @@
     <div class="container h-100" [ngStyle]="{'margin-top':signInpage === true ? '50px' : '15px'}">
       <div class="mid-container">
         <!-- Form -->
-        <form class="form-css" [formGroup]="loginForm"  (ngSubmit)="onLoginSubmit()" *ngIf="signInpage == true">
+        <form class="form-css" [formGroup]="loginForm"  (ngSubmit)="onLoginSubmit()" *ngIf="signInpage == true" autocomplete="off">
           <h1 class="text-header">Begin Quiz...</h1>
           <div class="inner-container">
             <div class="form-group input-group">
@@ -41,7 +41,7 @@
         <!-- Form end -->
   
         <!-- Register Form-->
-        <form class="form-css" [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="signInpage == false">
+        <form class="form-css" [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="signInpage == false" autocomplete="off">
           <h1 class="text-header">Registration Form</h1>
           <div class="inner-container">
             <div class="form-group input-group">

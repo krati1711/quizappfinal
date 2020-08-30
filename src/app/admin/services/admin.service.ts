@@ -54,7 +54,7 @@ export class AdminService {
 
   getQuestions(quizid: string) {
     //return this.http.get('http://localhost:3000/question/getQuestions/' + quizid);
-    return this.http.get('/question/getQuestions');
+    return this.http.get('/question/getQuestions/' + quizid);
   }
 
   deleteQuestion(qid: string){

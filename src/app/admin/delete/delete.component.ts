@@ -19,7 +19,7 @@ export class DeleteComponent implements OnInit, OnDestroy {
   addQuestion: FormGroup;
   quizList: Quiz[] = [];
   quizId: string = "";
-  
+
   constructor(private adminService: AdminService, private router: Router) {
     this.getQuiz$ = adminService.getAllQuiz().subscribe(res => {
       this.quizList = res.quizes;
@@ -62,13 +62,17 @@ export class DeleteComponent implements OnInit, OnDestroy {
       }
     )
   }
-  
+
   gotoDashboard(){
     this.router.navigate(['/dashboard']);
   }
 
   gotoAddQuestionClick(){
     this.router.navigate(['/add-question']);
+  }
+
+  gotoViewClick(){
+    this.router.navigate(['/view-questions']);
   }
 
   gotoDeleteClick(){

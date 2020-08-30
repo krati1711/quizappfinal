@@ -23,32 +23,42 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   addQuiz(quizName: String): Observable<any> {
-    // return this.http.post<any>('http://localhost:3000/quiz/addQuiz', {quizName: quizName}, options);
-    return this.http.post<any>('/quiz/addQuiz', {quizName: quizName}, options);
+    //return this.http.post<any>('http://localhost:3000/quiz/addQuiz', {quizName: quizName}, options);
+     return this.http.post<any>('/quiz/addQuiz', {quizName: quizName}, options);
   }
 
   addQuestion(question: String, correct: String, incorrect: String, quizId: string): Observable<any> {
-    // return this.http.post<any>('http://localhost:3000/question/addQuestion', {question: question, correct_answer: correct, wrong_answer: incorrect, quizId: quizId}, options);
+    //return this.http.post<any>('http://localhost:3000/question/addQuestion', {question: question, correct_answer: correct, wrong_answer: incorrect, quizId: quizId}, options);
     return this.http.post<any>('/question/addQuestion', {question: question, correct_answer: correct, wrong_answer: incorrect, quizId: quizId}, options);
   }
 
   deleteQuiz(quizid: string) {
-    // return this.http.delete<any>('http://localhost:3000/quiz/deleteQuiz/' + quizid);
+    //return this.http.delete<any>('http://localhost:3000/quiz/deleteQuiz/' + quizid);
     return this.http.delete<any>('/quiz/deleteQuiz/' + quizid);
   }
 
   getStudents(quizid: string) {
-    // return this.http.get<any>('http://localhost:3000/response/getResponseperQuiz/' + quizid);
+    //return this.http.get<any>('http://localhost:3000/response/getResponseperQuiz/' + quizid);
     return this.http.get<any>('/response/getResponseperQuiz/' + quizid);
   }
 
   getResponsesperQuiz(quizid: string, userid: string) {
-    // return this.http.get<any>('http://localhost:3000/user/userResponse/' + userid + '&' + quizid);
+    //return this.http.get<any>('http://localhost:3000/user/userResponse/' + userid + '&' + quizid);
     return this.http.get<any>('/user/userResponse/' + userid + '&' + quizid);
   }
 
   getAllQuiz(): Observable<any> {
-    // return this.http.get<any>('http://localhost:3000/quiz/getAllQuiz');
+    //return this.http.get<any>('http://localhost:3000/quiz/getAllQuiz');
     return this.http.get<any>('/quiz/getAllQuiz');
+  }
+
+  getQuestions(quizid: string) {
+    //return this.http.get('http://localhost:3000/question/getQuestions/' + quizid);
+    return this.http.get('/question/getQuestions');
+  }
+
+  deleteQuestion(qid: string){
+    //return this.http.delete('http://localhost:3000/question/deleteQuestion/' + qid);
+    return this.http.delete('/question/deleteQuestion/' + qid);
   }
 }

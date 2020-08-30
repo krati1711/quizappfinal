@@ -10,6 +10,7 @@ import { RoleGuard } from './auth/role.guard';
 import { AddQuizComponent } from './admin/add/add-quiz/add-quiz.component';
 import { AddQuestionComponent } from './admin/add/add-question/add-question.component';
 import { DeleteComponent } from './admin/delete/delete.component';
+import { ViewQuestionsComponent } from './admin/view-questions/view-questions.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'add-question', component: AddQuestionComponent, canActivate: [RoleGuard], data: { role:'admin' }
+  },
+  {
+    path: 'view-questions', component: ViewQuestionsComponent, canActivate: [RoleGuard], data: { role:'admin' }
   },
   {
     path: 'delete', component: DeleteComponent, canActivate: [RoleGuard], data: { role:'admin' }

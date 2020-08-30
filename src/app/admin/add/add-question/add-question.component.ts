@@ -47,7 +47,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
   get quizName() {
     return this.addQuestion.get('quiz_name');
   }
-  
+
   get f() { return this.addQuestion.controls; }
 
   changeQuiz(e) {
@@ -56,7 +56,7 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.addSubmitted = true;
-    
+
     if (this.addQuestion.invalid) {
       return;
     }
@@ -76,6 +76,10 @@ export class AddQuestionComponent implements OnInit, OnDestroy {
 
   gotoAddQuestionClick(){
     this.router.navigate(['/add-question']);
+  }
+
+  gotoViewClick(){
+    this.router.navigate(['/view-questions']);
   }
 
   gotoDeleteClick(){

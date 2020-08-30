@@ -56,6 +56,10 @@ export class AddQuizComponent implements OnInit, OnDestroy {
     this.router.navigate(['/add-question']);
   }
 
+  gotoViewClick(){
+    this.router.navigate(['/view-questions']);
+  }
+
   gotoDeleteClick() {
     this.router.navigate(['/delete']);
   }

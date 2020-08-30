@@ -6,11 +6,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeleteComponent } from './delete/delete.component';
 import { AddQuestionComponent } from './add/add-question/add-question.component';
 import { AddQuizComponent } from './add/add-quiz/add-quiz.component';
+import { ViewQuestionsComponent } from './view-questions/view-questions.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, DashboardComponent, DeleteComponent, AddQuestionComponent, AddQuizComponent],
+  declarations: [LoginComponent, DashboardComponent, DeleteComponent, AddQuestionComponent, AddQuizComponent, ViewQuestionsComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -45,7 +45,8 @@ app.get('/*', function (req, res) {
 
 mongoose
     .connect(
-        'mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PASSWD + '@cluster0-shard-00-00-vccpc.mongodb.net:27017,cluster0-shard-00-01-vccpc.mongodb.net:27017,cluster0-shard-00-02-vccpc.mongodb.net:27017/' + process.env.DB_NAME + '?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
+        //'mongodb://' + process.env.MONGO_HOST + ':' + process.env.MONGO_PASSWD + '@cluster0-shard-00-00-vccpc.mongodb.net:27017,cluster0-shard-00-01-vccpc.mongodb.net:27017,cluster0-shard-00-02-vccpc.mongodb.net:27017/' + process.env.DB_NAME + '?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
+        'mongodb://'+ process.env.MONGO_HOST + ':' + process.env.MONGO_PASSWD + '@cluster0-shard-00-00.vccpc.mongodb.net:27017,cluster0-shard-00-01.vccpc.mongodb.net:27017,cluster0-shard-00-02.vccpc.mongodb.net:27017/' + process.env.DB_NAME + '?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(result => {
         console.log("Backend Started");

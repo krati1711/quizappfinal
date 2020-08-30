@@ -19,6 +19,11 @@ const questionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Quizzes',
         required: true
+    },
+    isDeleted: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, { timestamps: true });
 

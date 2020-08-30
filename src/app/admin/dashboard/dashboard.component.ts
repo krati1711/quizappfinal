@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getQuiz$: Subscription = new Subscription();
   private getStudents$: Subscription = new Subscription();
   private getResponses$: Subscription = new Subscription();
-  
+
   addQuestion: FormGroup;
   quizList: any[] = [];
   quizId: string = '';
@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   get quizName() {
     return this.addQuestion.get('quiz_name');
   }
-  
+
   changeQuiz(e) {
     this.quizId = e.target.value;
   }
@@ -103,6 +103,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   gotoAddQuestionClick(){
     this.router.navigate(['/add-question']);
+  }
+
+  gotoViewClick(){
+    this.router.navigate(['/view-questions']);
   }
 
   gotoDeleteClick(){

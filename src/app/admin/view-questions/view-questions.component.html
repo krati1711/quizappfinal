@@ -23,10 +23,10 @@
                     <li class="nav-item"><a class="nav-link" routerLink="/add-question"
                             (click)="gotoAddQuestionClick()"> Add Quiz/Questions </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/view-questions" (click)="gotoViewClick()"> View Quiz/Questions
+                    <li class="nav-item"><a class="nav-link active" routerLink="/view-questions" (click)="gotoViewClick()"> View Quiz/Questions
                     </a>
                 </li>
-                    <li class="nav-item"><a class="nav-link active" routerLink="/delete" (click)="gotoDeleteClick()">
+                    <li class="nav-item"><a class="nav-link" routerLink="/delete" (click)="gotoDeleteClick()">
                             Delete Quiz
                         </a>
                     </li>
@@ -37,7 +37,7 @@
             <form>
                 <div class="card">
                     <div class="card-header">
-                        <strong>DELETE QUIZ</strong>
+                        <strong>VIEW QUESTIONS</strong>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -51,8 +51,25 @@
                             </div>
                         </div>
                         <div class="form-group text-center">
-                            <button class="btn " type="button" (click)="deleteQuiz()">Delete Quiz</button>
+                            <button class="btn " type="button" (click)="viewQuestion()">View Questions</button>
                         </div>
+
+                        <table class="table table-custom-class" *ngIf="doWeHaveQuestions === true">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Sr. No.</th>
+                                    <th scope="col">Question</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of questions; let i = index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <th scope="row">{{item.question}} [ {{item.answer}} ]</th>
+                                    <td scope="row" style="cursor: pointer; color: #6608d9"><a (click)="deleteQuestion(item.questionid, item.question, item.answer)">Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </form>

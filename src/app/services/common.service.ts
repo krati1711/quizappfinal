@@ -20,17 +20,17 @@ export class CommonService {
   constructor(private http: HttpClient) { }
 
   registerUser(email:string , name:string, age:string, gender:string): Observable<any> {
-    // return this.http.post<any>('http://localhost:3000/user/registerUser',{email: email, name: name, age: age, gender: gender}, options);
+    //return this.http.post<any>('http://localhost:3000/user/registerUser',{email: email, name: name, age: age, gender: gender}, options);
     return this.http.post<any>('/user/registerUser',{email: email, name: name, age: age, gender: gender}, options);
   }
 
   loginUser(username:string, quizid: string ): Observable<any> {
-    // return this.http.post<any>('http://localhost:3000/user/loginUser', {name: username, quizid: quizid}, options);
+    //return this.http.post<any>('http://localhost:3000/user/loginUser', {name: username, quizid: quizid}, options);
     return this.http.post<any>('/user/loginUser', {name: username, quizid: quizid}, options);
   }
-  
+
   login(username: string, password: string) {
-    // return this.http.post<any>('http://localhost:3000/auth/login', JSON.stringify({email: username, password: password}), options)
+    //return this.http.post<any>('http://localhost:3000/auth/login', JSON.stringify({email: username, password: password}), options)
     return this.http.post<any>('/auth/login', JSON.stringify({email: username, password: password}), options)
     .pipe(map(user => {
         if (user && user.token) {
